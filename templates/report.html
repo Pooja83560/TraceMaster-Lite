@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Report a Missing Person</h2>
+
+    <form method="POST" enctype="multipart/form-data" class="card p-4 shadow-sm">
+
+        <!-- Name -->
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" name="name" required>
+        </div>
+
+        <!-- Age -->
+        <div class="mb-3">
+            <label class="form-label">Age</label>
+            <input type="number" class="form-control" name="age" required>
+        </div>
+
+        <!-- Location -->
+        <div class="mb-3">
+            <label class="form-label">Last Seen Location</label>
+            <input type="text" class="form-control" name="location" required>
+        </div>
+        <!-- Description -->
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" name="description" rows="3"></textarea>
+        </div>
+        <!-- Missing Person Photo -->
+        <div class="mb-3">
+            <label class="form-label">Upload Missing Person Photo</label>
+            <input type="file" class="form-control" name="photo" accept="image/*" required>
+        </div>
+        <!-- Police Verification (Optional for now) -->
+        <div class="mb-3">
+            <label class="form-label">Upload Police Verification Photo (Optional)</label>
+            <input type="file" class="form-control" name="police_verification" accept="image/*">
+        </div>
+        <!-- Gender -->
+<div class="mb-3">
+    <label class="form-label">Gender</label>
+    <select class="form-control" name="gender">
+        <option value="">Select</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+    </select>
+</div>
+
+<!-- Height -->
+<div class="mb-3">
+    <label class="form-label">Height (cm)</label>
+    <input type="number" class="form-control" name="height">
+</div>
+
+<!-- Weight -->
+<div class="mb-3">
+    <label class="form-label">Weight (kg)</label>
+    <input type="number" class="form-control" name="weight">
+</div>
+
+<!-- Identifying Marks -->
+<div class="mb-3">
+    <label class="form-label">Identifying Marks (Tattoo/Scar/Birthmark)</label>
+    <input type="text" class="form-control" name="marks">
+</div>
+
+<!-- Last Seen Date -->
+<div class="mb-3">
+    <label class="form-label">Last Seen Date</label>
+    <input type="date" class="form-control" name="last_seen_date">
+</div>
+
+<!-- Last Seen Time -->
+<div class="mb-3">
+    <label class="form-label">Last Seen Time</label>
+    <input type="time" class="form-control" name="last_seen_time">
+</div>
+
+<!-- Clothes -->
+<div class="mb-3">
+    <label class="form-label">Clothes Worn</label>
+    <input type="text" class="form-control" name="clothes">
+</div>
+
+<!-- Reporter Phone -->
+<div class="mb-3">
+    <label class="form-label">Your Phone Number</label>
+    <input type="text" class="form-control" name="phone" required>
+</div>
+
+<!-- Reporter Email -->
+<div class="mb-3">
+    <label class="form-label">Your Email</label>
+    <input type="email" class="form-control" name="email">
+</div>
+
+<!-- Relationship -->
+<div class="mb-3">
+    <label class="form-label">Your Relationship with Missing Person</label>
+    <input type="text" class="form-control" name="relationship">
+</div>
+        <button type="submit" class="btn btn-primary w-100">
+            Submit Report
+        </button>
+    </form>
+
+</div>
+
+{% endblock %}

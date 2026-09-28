@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>🔎 Search Results</h2>
+
+<ul>
+    {% for person in results %}
+        <li>
+            <b>{{ person.name }}</b> ({{ person.age }} years) <br>
+            Location: {{ person.location }} <br>
+            Description: {{ person.description }}
+        </li>
+        <hr>
+    {% else %}
+        <p>No matching records found.</p>
+    {% endfor %}
+</ul>
+{% endblock %}

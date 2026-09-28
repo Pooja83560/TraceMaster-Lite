@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center mb-4">🔎 Search Missing Persons</h2>
+
+  <form method="POST" class="row g-3 mb-5" enctype="multipart/form-data">
+    <div class="col-md-4">
+      <input type="text" class="form-control" name="name" placeholder="Enter Name">
+    </div>
+    <div class="col-md-4">
+      <input type="text" class="form-control" name="location" placeholder="Enter Location">
+    </div>
+    <div class="col-md-3">
+      <input type="file" class="form-control" name="photo">
+    </div>
+    <div class="col-md-1">
+      <button type="submit" class="btn btn-primary w-100">Search</button>
+    </div>
+  </form>
+
+  {% if results %}
+    <div class="row">
+      {% for person in results %}
+        <div class="col-md-4 mb-4">
+          <div class="card shadow-lg h-100" style="border-radius:15px; overflow:hidden;">
+
+            <!-- FULL PHOTO (NO CROP) -->
+            {% if person.photo_path %}
+            <img src="{{ url_for('static', filename='uploads/missing/' + person.photo_path) }}"
+                 class="card-img-top"
+                 style="height:260px; object-fit:contain; background:#f8f9fa; padding:10px;">
+            {% endif %}
+
+            <div class="card-body">
+              <h5 class="card-title text-center fw-bold">
+                {{ person.name }} {% if person.age %}({{ person.age }}){% endif %}
+              </h5>
+
+              <p class="card-text">
+                <strong>Gender:</strong> {{ person.gender }} <br>
+                <strong>Height:</strong> {{ person.height }} cm <br>
+                <strong>Weight:</strong> {{ person.weight }} kg <br>
+                <strong>Last Seen:</strong> {{ person.location }} <br>
+                <strong>Date:</strong> {{ person.last_seen_date }} <br>
+                <strong>Time:</strong> {{ person.last_seen_time }} <br>
+                <strong>Clothes:</strong> {{ person.clothes }} <br>
+                <strong>Marks:</strong> {{ person.marks }} <br>
+                <strong>Phone:</strong> {{ person.phone }} <br>
+                <strong>Email:</strong> {{ person.email }} <br>
+                <strong>Relationship:</strong> {{ person.relationship }} <br>
+              </p>
+
+              {% if person.description %}
+              <p class="text-muted">
+                <strong>Description:</strong> {{ person.description }}
+              </p>
+              {% endif %}
+
+              <!-- STATUS -->
+              <div class="text-center">
+                {% if person.approved %}
+                  <span class="badge bg-success">Approved</span>
+                {% elif person.rejected %}
+                  <span class="badge bg-danger">Rejected</span>
+                {% else %}
+                  <span class="badge bg-warning">Pending</span>
+                {% endif %}
+              </div>
+
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+  {% elif request.method == "POST" %}
+    <p class="text-center text-muted">No results found.</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- Hero Section -->
+<div class="text-center py-5 mb-5" 
+     style="background: linear-gradient(135deg, #6a11cb, #2575fc); border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.25); color: white;">
+    
+    <h1 class="display-4 fw-bold">🚀 TraceMaster Lite</h1>
+    <p class="lead">Report and search for missing persons with ease and speed.</p>
+
+    <a href="{{ url_for('report') }}" 
+       class="btn btn-lg shadow-sm px-4 py-2 mt-3" 
+       style="border-radius: 50px; background-color: #ff6b6b; color: white; font-weight: bold;">
+        + Report a Missing Person
+    </a>
+
+    <div class="mt-3">
+        <a href="{{ url_for('search') }}" 
+           class="btn btn-light px-4 py-2"
+           style="border-radius: 50px; font-weight: bold;">
+           🔍 Search Missing Person
+        </a>
+    </div>
+
+    <!-- Admin Button -->
+    <div class="mt-3">
+        {% if session.get("is_admin") %}
+            <a href="{{ url_for('admin_dashboard') }}" 
+               class="btn btn-warning px-4 py-2"
+               style="border-radius: 50px; font-weight: bold;">
+               🛠 Admin Dashboard
+            </a>
+        {% else %}
+            <a href="{{ url_for('login') }}" 
+               class="btn btn-dark px-4 py-2"
+               style="border-radius: 50px; font-weight: bold;">
+               🔐 Admin Login
+            </a>
+        {% endif %}
+    </div>
+
+</div>
+
+<!-- Recent Reports Section -->
+<h2 class="mb-4 text-center fw-bold text-dark">🕵️ Recent Reports</h2>
+
+<div class="row justify-content-center">
+  {% set has_reports = false %}
+
+  {% for person in reports %}
+    {% if person.approved %}
+      {% set has_reports = true %}
+
+      <div class="col-md-4 col-sm-6 mb-4">
+        <div class="card h-100 border-0 shadow-lg" 
+             style="border-radius: 15px; overflow: hidden; transition: 0.3s;">
+
+          <!-- IMAGE -->
+          {% if person.photo_path %}
+              <img src="{{ url_for('static', filename='uploads/missing/' + person.photo_path) }}" 
+               class="card-img-top" 
+               alt="{{ person.name }}"
+               style="height: 260px; object-fit: contain; background:#f8f9fa; padding:10px;">
+          {% else %}
+          <img src="{{ url_for('static', filename='default.png') }}" 
+               class="card-img-top" 
+               style="height: 260px; object-fit: contain;">
+          {% endif %}
+
+          <div class="card-body">
+            <h5 class="card-title fw-bold text-center">
+              {{ person.name }} {% if person.age %}({{ person.age }}){% endif %}
+            </h5>
+
+            <p class="card-text">
+              <strong>Gender:</strong> {{ person.gender }} <br>
+              <strong>Height:</strong> {{ person.height }} cm <br>
+              <strong>Weight:</strong> {{ person.weight }} kg <br>
+              <strong>Last Seen:</strong> {{ person.location }} <br>
+              <strong>Date:</strong> {{ person.last_seen_date }} <br>
+              <strong>Time:</strong> {{ person.last_seen_time }} <br>
+              <strong>Clothes:</strong> {{ person.clothes }} <br>
+              <strong>Marks:</strong> {{ person.marks }} <br>
+              <strong>Phone:</strong> {{ person.phone }} <br>
+              <strong>Email:</strong> {{ person.email }} <br>
+              <strong>Relationship:</strong> {{ person.relationship }} <br>
+            </p>
+
+            {% if person.description %}
+            <p class="card-text text-muted">
+              <strong>Description:</strong> {{ person.description }}
+            </p>
+            {% endif %}
+
+            <div class="text-center mb-2">
+              {% if person.approved %}
+                <span class="badge bg-success">Approved</span>
+              {% elif person.rejected %}
+                <span class="badge bg-danger">Rejected</span>
+              {% else %}
+                <span class="badge bg-warning">Pending</span>
+              {% endif %}
+            </div>
+
+            {% if session.get("user_id") %}
+              {% if person.user_id == session.get("user_id") or session.get("is_admin") %}
+              <form action="{{ url_for('delete_report', report_id=person.id) }}" method="POST">
+                <button type="submit" class="btn btn-danger btn-sm w-100"
+                        onclick="return confirm('Are you sure you want to delete this report?');">
+                  Delete Report
+                </button>
+              </form>
+              {% endif %}
+            {% endif %}
+
+          </div>
+        </div>
+      </div>
+
+    {% endif %}
+  {% endfor %}
+
+  {% if not has_reports %}
+    <p class="text-center text-muted">No approved reports yet.</p>
+  {% endif %}
+</div>
+
+<style>
+.card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+</style>
+
+{% endblock %}

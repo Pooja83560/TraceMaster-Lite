@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Edit Missing Person Report</h2>
+
+    <form method="POST">
+        <div class="row">
+            <div class="col-md-6 mb-2">
+                <input type="text" name="name" class="form-control" value="{{ report.name }}" placeholder="Name">
+            </div>
+            <div class="col-md-3 mb-2">
+                <input type="number" name="age" class="form-control" value="{{ report.age }}" placeholder="Age">
+            </div>
+            <div class="col-md-3 mb-2">
+                <input type="text" name="gender" class="form-control" value="{{ report.gender }}" placeholder="Gender">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 mb-2">
+                <input type="text" name="height" class="form-control" value="{{ report.height }}" placeholder="Height">
+            </div>
+            <div class="col-md-3 mb-2">
+                <input type="text" name="weight" class="form-control" value="{{ report.weight }}" placeholder="Weight">
+            </div>
+            <div class="col-md-6 mb-2">
+                <input type="text" name="marks" class="form-control" value="{{ report.marks }}" placeholder="Identification Marks">
+            </div>
+        </div>
+
+        <div class="mb-2">
+            <input type="text" name="location" class="form-control" value="{{ report.location }}" placeholder="Last Seen Location">
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-2">
+                <input type="date" name="last_seen_date" class="form-control" value="{{ report.last_seen_date }}">
+            </div>
+            <div class="col-md-6 mb-2">
+                <input type="time" name="last_seen_time" class="form-control" value="{{ report.last_seen_time }}">
+            </div>
+        </div>
+
+        <div class="mb-2">
+            <input type="text" name="clothes" class="form-control" value="{{ report.clothes }}" placeholder="Clothes">
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-2">
+                <input type="text" name="phone" class="form-control" value="{{ report.phone }}" placeholder="Phone">
+            </div>
+            <div class="col-md-6 mb-2">
+                <input type="email" name="email" class="form-control" value="{{ report.email }}" placeholder="Email">
+            </div>
+        </div>
+
+        <div class="mb-2">
+            <input type="text" name="relationship" class="form-control" value="{{ report.relationship }}" placeholder="Relationship">
+        </div>
+
+        <div class="mb-3">
+            <textarea name="description" class="form-control" placeholder="Description">{{ report.description }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">Update Report</button>
+    </form>
+</div>
+{% endblock %}
